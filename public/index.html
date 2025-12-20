@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Nowas Gym — Demo PRO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <h1>Nowas Gym — Automatizaciones</h1>
+      <p>Más reservas. Menos ausencias. Automatiza con WhatsApp + CRM.</p>
+      <a class="btn" href="#demo">Solicitar demo gratis</a>
+    </div>
+  </header>
+
+  <section class="container">
+    <div class="grid">
+      <div>
+        <h2>¿Por qué esto funciona?</h2>
+        <ul>
+          <li>Respuesta 24/7 en WhatsApp</li>
+          <li>Recordatorios automáticos</li>
+          <li>Recuperación de clientes inactivos</li>
+          <li>Renovaciones con enlace de pago</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Planes</h3>
+          <p><strong>Básico</strong> 97€/mes: respuestas automáticas + captación de leads</p>
+          <p><strong>Pro</strong> 197€/mes: + recordatorios y seguimiento</p>
+          <p><strong>Premium</strong> 297€/mes: todo + reactivación y generación de contenido</p>
+          <a class="btn" href="#demo">Reserva tu demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#7eaddb">
+    <div class="container">
+      <h2>Cómo funciona</h2>
+      <div class="grid">
+        <div class="card"><h4>1  Conecta WhatsApp</h4><p>Integración del número y respuestas 24/7.</p></div>
+        <div class="card"><h4>2  Automatiza</h4><p>Captación, seguimiento y reactivación.</p></div>
+        <div class="card"><h4>3  Mide</h4><p>Dashboard con conversiones y leads.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="demo" class="card">
+      <h2>Solicita tu demo</h2>
+      <form id="demoForm" class="form">
+        <input name="name" placeholder="Nombre" required>
+        <input name="phone" placeholder="Teléfono (WhatsApp)" required>
+        <input name="email" placeholder="Email">
+        <textarea name="note" placeholder="Describe tu gimnasio"></textarea>
+        <button class="btn" type="submit">Solicitar demo</button>
+      </form>
+      <div id="formMsg" class="formMsg" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2025 Nowas Gym · Contacto: 652997941 ·
+      <a href="mailto:contactonowasfit@gmail.com">contactonowasfit@gmail.com</a>
+    </div>
+  </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("demoForm");
+  const formMsg = document.getElementById("formMsg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: form.name.value,
+      phone: form.phone.value,
+      email: form.email.value,
+      note: form.note.value
+    };
+
+    try {
+      const res = await fetch("/send-demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      if(result.ok) {
+        formMsg.textContent = "✔ Tu demo ha sido enviada correctamente!";
+        formMsg.style.color = "green";
+
+        // Scroll hacia arriba
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        form.reset();
+      } else {
+        formMsg.textContent = "❌ Error: " + (result.error || "No se pudo enviar");
+        formMsg.style.color = "red";
+      }
+
+    } catch (err) {
+      formMsg.textContent = "❌ Error al enviar.";
+      formMsg.style.color = "red";
+      console.error(err);
+    }
+  });
+});
+</script>
+</body>
+</html>
