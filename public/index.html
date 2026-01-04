@@ -6,6 +6,20 @@
   <title>Nowas Gym — Demo PRO</title>
   <link rel="stylesheet" href="style.css">
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VJVSSN1Z7K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VJVSSN1Z7K');
+
+</script>
+<input type="hidden" name="utm_source" id="utm_source">
+<input type="hidden" name="utm_campaign" id="utm_campaign">
+<input type="hidden" name="utm_ad" id="utm_ad">
+
 <body>
   <header class="hero">
     <div class="container">
@@ -97,6 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if(result.ok) {
         formMsg.textContent = "✔ Tu demo ha sido enviada correctamente!";
         formMsg.style.color = "green";
+        gtag('event', 'generate_lead', {
+         event_category: 'form',
+        event_label: 'demo'
+});
+
 
         // Scroll hacia arriba
         window.scrollTo({ top: 0, behavior: "smooth" });
